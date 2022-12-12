@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Setting Up Mcq {% endblock %}
+{% block body %}
+{% if exam.numOfQues == exam.quesSets.count %}
+<meta http-equiv="refresh" content=".001; url='/exam/questionPaper/{{exam.pk}}'" />
+{% endif %}
+<div class="card container-fluid justify-content-center shadow" style="width: 60%;margin-top:1rem;">
+  <div class="card-title">
+    <h3 class="text-center" style="margin-top: 1rem;color:teal">{{ exam.name }} | Author : {{ exam.host }}</h3>
+      <hr><h6 class="text-center text-danger">{{exam.numOfSetQues}} questions has been set out of {{exam.numOfQues}}
+        questions.</h6></b>
+  </div>
+  <form action="updateIndividualQues" method="post">
+    {% csrf_token %}
+    <!-- complexity -->
+    <div class="mb-3">
+      <label for="complexity"><b>Complexity:</b></label>
+      <select name="complexity" id="complexity">
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Medium Hard">Medium Hard</option>
+        <option value="Hard">Hard</option>
+      </select>
+    </div>
+    <!-- topics -->
+    <div class="mb-3">
+      <label for="topicName"><b>Topic:</b></label>
+      <select name="topicName" id="topicName">
+        {% for i in topics %}
+        <option value="{{i.pk}}">{{i.topic}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <!-- question -->
+    <div class="mb-3">
+      <label for="question" class="form-label"><b>Question</b></label>
+      <textarea class="form-control" id="question" name="question"></textarea>
+    </div>
+    <!-- exam id -->
+    <div class="mb-3">
+      <input type="hidden" class="form-control" id="examId" name="examId" value={{exam.pk}}>
+    </div>
+    <!-- opt1 -->
+    <div class="mb-3">
+      <label for="opt1" class="form-label"><b>Option A</b></label>
+      <input type="text" class="form-control" id="opt1" name="opt1">
+    </div>
+    <!-- opt2 -->
+    <div class="mb-3">
+      <label for="opt2" class="form-label"><b>Option B</b></label>
+      <input type="text" class="form-control" id="opt2" name="opt2">
+    </div>
+    <!-- opt3 -->
+    <div class="mb-3">
+      <label for="opt3" class="form-label"><b>Option C</b></label>
+      <input type="text" class="form-control" id="opt3" name="opt3">
+    </div>
+    <!-- opt4 -->
+    <div class="mb-3">
+      <label for="opt4" class="form-label"><b>Option D</b></label>
+      <input type="text" class="form-control" id="opt4" name="opt4">
+    </div>
+    
+    <!-- ans -->
+    <div class="mb-3">
+      <label for="ans"><b>Answer</b></label>
+      <select name="ans" id="ans" style="width: 20%;">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="D">N</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button><hr>
+  </form>
+</div>
+{% endblock %}

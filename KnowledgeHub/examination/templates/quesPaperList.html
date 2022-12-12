@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Question papers {% endblock %}
+{% block body %}
+<div class=" container-fluid" style="width: 80%;margin-top: 1rem;margin-bottom:2rem">
+    <h3 class="text-center" style="color:teal">Question Papers</h3>
+    {% for i in exams %}
+    <div class="card container-fluid shadow" style="width: 80%;background-color: whitesmoke;color:tomato">
+        <div class="card-body">
+            <p>{{forloop.counter}}) <a href="questionPaper/{{i.pk}}"
+                    style="text-decoration:none;color:tomato">{{i.name}} | Created by {{i.host}}</a>
+            </p><br>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

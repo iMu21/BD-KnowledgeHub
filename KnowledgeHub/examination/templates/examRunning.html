@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Question Paper {% endblock %}
+{% block body %}
+{% if exam.ended %}
+<meta http-equiv="refresh" content=".001; url='/exam/questionPaper/{{exam.quesSet.pk}}'" />
+{% endif %}
+<div class="card container-fluid" style="width: 70%;margin-top: 1rem;margin-bottom:2rem;">
+    <br><h3 class="text-center" style="color:teal">{{exam.name}}</h3>
+    <b class="text-center">End Time: {{exam.endTime}}</b>
+    <b class="text-center">Total Question: {{exam.quesSet.numOfSetQues}}</b>
+    <form action="processAnswer" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="examId" name="examId" value="{{exam.pk}}">
+        {% for i in quesPaper %}
+        <div class="card container-fluid shadow" style="width: 80%;">
+            <div class="card-body">
+                <b style="color:tomato">{{forloop.counter}}) {{i.question}}</b><small> ({{i.topic}})</small><br><br>
+                <p><b style="margin-right: 1rem;">A.</b>{{i.opt1}}</p>
+                <p><b style="margin-right: 1rem;">B.</b>{{i.opt2}}</p>
+                <p><b style="margin-right: 1rem;">C.</b>{{i.opt3}}</p>
+                <p><b style="margin-right: 1rem;">D.</b>{{i.opt4}}</p>
+                <p><b style="margin-right: 1rem;">E.</b>{{i.opt5}}</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{i.pk}}" id="{{i.pk}}" value="A">
+                    <label class="form-check-label" for="{{i.pk}}">A</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{i.pk}}" id="{{i.pk}}" value="B">
+                    <label class="form-check-label" for="{{i.pk}}">B</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{i.pk}}" id="{{i.pk}}" value="C">
+                    <label class="form-check-label" for="{{i.pk}}">C</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{i.pk}}" id="{{i.pk}}" value="D">
+                    <label class="form-check-label" for="{{i.pk}}">D</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{i.pk}}" id="{{i.pk}}" value="E">
+                    <label class="form-check-label" for="{{i.pk}}">E</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{i.pk}}" id="{{i.pk}}" value="Blank">
+                    <label class="form-check-label" for="{{i.pk}}">Blank</label>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <hr>
+        <button type="submit" class="btn btn-primary" style="background-color:green;margin-left:25rem;margin-top:4;width: 20%;">Submit Answer</button>
+    <br><br>
+    </form>
+</div>
+
+{% endblock %}

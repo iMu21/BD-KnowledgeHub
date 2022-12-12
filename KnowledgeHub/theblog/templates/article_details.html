@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %} {{ post.title }} {% endblock %}
+{% block body %}
+
+<div class="card container-fluid" style="margin-top: 3rem;width: 60%;">
+    <div class="card-body">
+        <h5 class="card-title text-center " style="color:rgb(165, 50, 50)!important;">{{post.title}} |
+            {{post.author.username}}
+        </h5>
+
+        <p class="text-center "> Published Date:
+            {{post.post_date}}
+
+            {% if user == post.author %}
+            <a style="color:rgb(165, 50, 50)" href="{% url 'update_post' post.pk %}">Edit</a>-
+            <a style="color:rgb(165, 50, 50)" href="{% url 'delete_post' post.pk %}">Delete</a>
+            {% endif %}
+        </p>
+        <hr>
+    </div>
+    <div class="card-body">
+        <div >
+            <p class="card-text">{{post.body|safe}}
+
+            </p>
+        </div>
+        {% if post.header_image %}
+        <br>
+        <div><img src="{{post.header_image.url}}" class="card-img-top img-fluid" alt="..."></div>
+        {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <br>
+    <hr>
+    <form action="{% url 'like' post.pk  %}" method="POST">
+        {% csrf_token %}
+        <h6 class="container" style="width: 25rem;">
+            {% if user in post.likes.all %}
+            <button type="submit" name="post_id" value="{{ post.pk }}" class="btn btn-danger">Unlike</button>
+            {% else %}
+            <button type="submit" name="post_id" value="{{ post.pk }}" class="btn btn-primary">Like</button>
+            {% endif %}
+            - {{post.total_likes}} Likes
+        </h6>
+    </form>
+    <hr>
+    <form action="{% url 'comment' post.pk  %}" method="POST">
+        {% csrf_token %}
+        <div class="input-group ">
+            <textarea class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment"></textarea>
+            <button type="submit" class="btn btn-primary">Comment</button>
+          </div>
+    </form>
+    <hr>
+    {% for comment in post.comments.all %}
+    <h6 >{{comment.author}}
+    {{comment.created_at}}</h6>
+    {{comment.comment}}
+    <br>
+    {% endfor %}
+    <hr>
+    {% endif %}
+
+</div>
+{% endblock %}

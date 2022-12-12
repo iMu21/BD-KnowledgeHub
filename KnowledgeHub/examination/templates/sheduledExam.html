@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Exams {% endblock %}
+{% block body %}
+<div class=" container-fluid" style="width: 80%;margin-top: 1rem;margin-bottom:2rem">
+    <h3 class="text-center" style="color:teal">Upcoming Exams</h3>
+    {% for i in exams %}
+    {% if not i.ended and not i.running %}
+    <div class="card container-fluid shadow" style="width: 80%;background-color: whitesmoke;color:tomato">
+        <div class="card-body">
+            <p>{{forloop.counter}}) <a href="examDetails/{{i.pk}}"
+                    style="text-decoration:none;color:tomato">{{i.name}} | Created by {{i.host}}</a>
+                    <p style="color: teal;">{{i.startTime}}</p>
+            </p><br>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class=" container-fluid" style="width: 80%;margin-top: 1rem;margin-bottom:2rem">
+    <h3 class="text-center" style="color:teal">Running Exams</h3>
+    {% for i in exams %}
+    {% if i.running %}
+    <div class="card container-fluid shadow" style="width: 80%;background-color: whitesmoke;color:tomato">
+        <div class="card-body">
+            <p>{{forloop.counter}}) <a href="examDetails/{{i.pk}}"
+                    style="text-decoration:none;color:tomato">{{i.name}} | Created by {{i.host}}</a>
+                    <p style="color: teal;">{{i.startTime}}</p>
+            </p><br>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class=" container-fluid" style="width: 80%;margin-top: 1rem;margin-bottom:2rem">
+    <h3 class="text-center" style="color:teal">Previous Exams</h3>
+    {% for i in exams %}
+    {% if i.ended %}
+    <div class="card container-fluid shadow" style="width: 80%;background-color: whitesmoke;color:tomato">
+        <div class="card-body">
+            <p>{{forloop.counter}}) <a href="examDetails/{{i.pk}}"
+                    style="text-decoration:none;color:tomato">{{i.name}} | Created by {{i.host}}</a>
+                    <p style="color: teal;">{{i.startTime}}</p>
+            </p><br>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

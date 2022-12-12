@@ -1,0 +1,208 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <style>
+    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+    section {
+      padding: 60px 0;
+    }
+
+    section .section-title {
+      text-align: center;
+      color: #007b5e;
+      margin-bottom: 50px;
+      text-transform: uppercase;
+    }
+
+    #footer {
+      background: rgb(67, 82, 79) !important;
+    }
+
+    #footer h5 {
+      padding-left: 10px;
+      border-left: 3px solid #eeeeee;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    #footer a {
+      color: #ffffff;
+      text-decoration: none !important;
+      background-color: transparent;
+      -webkit-text-decoration-skip: objects;
+    }
+
+    #footer ul.social li {
+      padding: 3px 0;
+    }
+
+    #footer ul.social li a i {
+      margin-right: 5px;
+      font-size: 25px;
+      -webkit-transition: .5s all ease;
+      -moz-transition: .5s all ease;
+      transition: .5s all ease;
+    }
+
+    #footer ul.social li:hover a i {
+      font-size: 30px;
+      margin-top: -10px;
+    }
+
+    #footer ul.social li a,
+    #footer ul.quick-links li a {
+      color: #ffffff;
+    }
+
+    #footer ul.social li a:hover {
+      color: #eeeeee;
+    }
+
+    #footer ul.quick-links li {
+      padding: 3px 0;
+      -webkit-transition: .5s all ease;
+      -moz-transition: .5s all ease;
+      transition: .5s all ease;
+    }
+
+    #footer ul.quick-links li:hover {
+      padding: 3px 0;
+      margin-left: 5px;
+      font-weight: 700;
+    }
+
+    #footer ul.quick-links li a i {
+      margin-right: 5px;
+    }
+
+    #footer ul.quick-links li:hover a i {
+      font-weight: 700;
+    }
+
+    @media (max-width:767px) {
+      #footer h5 {
+        padding-left: 0;
+        border-left: transparent;
+        padding-bottom: 0px;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg sticky-top   navbar-dark " style="background-color:rgb(67, 82, 79)">
+    <a class="navbar-brand" href="{% url 'home' %}">BD Knowledge Hub</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'home' %}"><small>Home </small><span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'quesPaperList' %}"><small>Question Papers</small></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'quesList' %}"><small>Question Bank</small></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'sheduledExam' %}"><small>Exam Schedules</small></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'createQuesPaper' %}"><small>Create Question Paper</small></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'createExam' %}"><small>Create Exam</small></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add_post' %}"><small>Create Article</small></a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'profile' %}">{{user.username}}</a>
+        </li>
+        <li class="nav-item"></li>
+        <a class="nav-link  " href="{% url 'logOut' %}">Log Out</a>
+        </li>
+        {% else %}
+        <li class="nav-item ">
+          <a class="nav-link " href="{% url 'logIn' %}">Log In</a>
+        </li>
+        <li class="nav-item"></li>
+        <a class="nav-link " href="{% url 'signUp' %}">Sign Up</a>
+        </li>
+        {% endif%}
+      </ul>
+    </div>
+  </nav>
+  <div>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <div class="alert alert-info text-center" style="color: teal;">
+        {{message}}
+      </div>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  {% block body %}
+
+
+  {% endblock %}
+  <!-- Footer -->
+  <section id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+          <ul class="list-unstyled list-inline social text-center">
+            <li class="list-inline-item"><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.google.com"><i class="fa fa-google-plus"></i></a></li>
+          </ul>
+        </div>
+        <hr>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+          <p><u><a href="https://www.nationaltransaction.com/">BD Knowledge Hub</a></u> is an integreted platform to
+            share and exercise knowledges.</p>
+            <p class="h6">Contact Us: +8801863834580 | bdknowledgehubteam@gmail.com</p>
+          <p class="h6">© All right Reversed.<a class="text-green ml-2" href="{% url 'home' %}" target="_blank">BD
+              Knowledge Hub Team</a></p>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </section>
+  <!-- ./Footer -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Question Bank {% endblock %}
+{% block body %}
+<div class="container-fluid text-center" style="width: 50%;margin-top: 1rem;">
+    <form action="quesList" method="post">
+        {% csrf_token %}
+        {% if top %}
+        <div class="mb-3">
+            <label for="topicName">
+                <b>Choose a topic</b><br>
+            </label>
+            <select name="topicName" id="topicName">
+                {% for j in topicNames %}
+                <option value="{{j.pk}}">{{j.topic}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% elif sub %}
+        <div class="mb-3">
+            <label for="topicName">
+                <b>Choose a topic</b><br>
+            </label>
+            <select name="topicName" id="topicName">
+                {% for j in topicNames %}
+                <option value="{{j.pk}}">{{j.topic}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% else %}
+        <div class="mb-3">
+            <label for="subName"><b>Choose a topic</b></label>
+            <select name="subName" id="subName">
+                {% for j in subNames %}
+                <option value="{{j.pk}}">{{j}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+        <p><a href="{% url 'quesList' %}" style="color:red">return</a></p>
+    </form>
+
+</div>
+<div class=" container-fluid" style="width: 80%;margin-top: 1rem;">
+    <h3 class="text-center" style="color:tomato">Questions</h3>
+    <h6 class="text-center" style="color:tomato">{{sub}}</h6>
+    <h6 class="text-center" style="color:tomato">{{top}}</h6>
+    {% if top == false and sub %}
+    {% for j in ques %}
+    {% for i in j %}
+    <div class="card container-fluid shadow" style="width: 70%;margin-bottom: 2rem;">
+        <div class="card-body" style="margin: 2rem;">
+            <b style="color:tomato">{{forloop.counter}}) {{i.question}}</b><small> ({{i.topic}})</small><br><br>
+            <p><b style="margin-right: 1rem;">A.</b>{{i.opt1}}</p>
+            <p><b style="margin-right: 1rem;">B.</b>{{i.opt2}}</p>
+            <p><b style="margin-right: 1rem;">C.</b>{{i.opt3}}</p>
+            <p><b style="margin-right: 1rem;">D.</b>{{i.opt4}}</p>
+            <p style="color:green"><b style="margin-right: 1rem;">Answer:</b>{{i.ans}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% else %}
+    {% for i in ques %}
+    <div class="card container-fluid shadow" style="width: 70%;margin-bottom: 2rem;">
+        <div class="card-body" style="margin: 2rem;">
+            <b style="color:tomato">{{forloop.counter}}) {{i.question}}</b><small> ({{i.topic}})</small><br><br>
+            <p><b style="margin-right: 1rem;">A.</b>{{i.opt1}}</p>
+            <p><b style="margin-right: 1rem;">B.</b>{{i.opt2}}</p>
+            <p><b style="margin-right: 1rem;">C.</b>{{i.opt3}}</p>
+            <p><b style="margin-right: 1rem;">D.</b>{{i.opt4}}</p>
+            <p style="color:green"><b style="margin-right: 1rem;">Answer:</b>{{i.ans}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

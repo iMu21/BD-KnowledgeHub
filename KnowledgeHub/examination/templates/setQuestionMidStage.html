@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Sign Up {% endblock %}
+{% block body %}
+{% if exam.numOfQues == exam.numOfSetQues %}
+<meta http-equiv="refresh" content=".001; url='/exam/questionPaper/{{exam.pk}}'" />
+{% endif %}
+<meta http-equiv="refresh" content=".001; url='/exam/setQues/{{exam.pk}}'" />
+{% endblock %}

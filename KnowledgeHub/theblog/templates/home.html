@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}BD Knowledge Hub {% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-3">
+        <div class="card" style="position:fixed;margin-top: 3rem!important;margin-left: 1rem;padding:1rem">
+            <h5 class="text-center" style="color:teal;">Up Coming Examinations
+            </h5>
+            <div class="card-body">
+                {% for i in upComingExams %}
+                {% if not i.ended and not i.running %}
+                <div class="container">
+                    <a style="color:rgb(45, 45, 53)" href="{% url 'examDetails' i.pk %}">&#9679;
+                        {{i.name|safe|slice:15}}</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-6">
+        <div style="margin-top: 3rem;">
+            <ul>
+                {% for post in object_list %}
+                <div class="border rounded shadow container">
+                    <div>
+                        <h5 class="text-center">{{post.author.username}}
+                        </h5>
+
+                    </div>
+                    <div>
+                        <a style="color:rgb(165, 50, 50)" href="{% url 'article-detail' post.pk %}">
+                            <h5 class="text-center" style="color:rgb(165, 50, 50)!important;text-decoration: none;">
+                                {{post.title}}</h5>
+                        </a>
+                    </div>
+                    <p class="text-center "> Published Date:
+                        {{post.post_date}}
+                        {% if user == post.author %}
+                        <a style="color:rgb(165, 50, 50)" href="{% url 'update_post' post.pk %}">Edit</a>-
+                        <a style="color:rgb(165, 50, 50)" href="{% url 'delete_post' post.pk %}">Delete</a>
+                        {% endif %}
+                    </p>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text" style="color:black!important">{{post.body|safe|slice:":1200"}}
+                                <a href="{% url 'article-detail' post.pk %}"
+                                    style="color:rgb(165, 50, 50)!important">See More...</a>
+                            </p>
+
+                            {% if post.header_image %}
+                            <br>
+                            <div><img src="{{post.header_image.url}}" class="card-img-top img-fluid" alt="..."></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <br>
+                    <form action="{% url 'likeHome' post.pk %}" method="POST">
+                        {% csrf_token %}
+                        <h6 class="container" style="width: 25rem;">
+                            {% if user in post.likes.all %}
+                            <button type="submit" name="post_id" value="{{ post.pk }}"
+                                class="btn btn-danger">Unlike</button>
+                            {% else %}
+                            <button type="submit" name="post_id" value="{{ post.pk }}"
+                                class="btn btn-primary">Like</button>
+                            {% endif %}
+                            - {{post.total_likes}} people liked this post.
+                        </h6>
+                    </form>
+                    {% endif %}
+                </div>
+                <hr class="container" style="margin-top: 3rem;margin-bottom: 3rem;width:45rem;">
+
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="card" style="position:fixed;margin-top: 3rem!important;margin-left: 1rem;padding:1rem">
+            <h5 class="text-center" style="color:teal;">Top Rated
+            </h5>
+            <div class="card-body">
+                {% for i in upComingExams %}
+                {% if not i.ended and not i.running %}
+                <div class="container">
+                    <a style="color:rgb(45, 45, 53)" href="{% url 'examDetails' i.pk %}">&#9679;
+                        {{i.name|safe|slice:15}}</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

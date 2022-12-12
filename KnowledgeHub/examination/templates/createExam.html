@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Create Exam {% endblock %}
+{% block body %}
+<div class="card container-fluid shadow" style="width: 60%;">
+  <h1 style="margin-top: 1rem;color:teal" class="text-center "><b>Create Exam</b></h1><hr>
+  <form action="createExamReq" method="post">
+    {% csrf_token %}
+    <!-- exam name -->
+    <div class="mb-3">
+      <label for="name" class="form-label"><b>Exam Name</b></label>
+      <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <!-- quesSet -->
+    <div class="mb-3">
+      <label for="quesSetId"><b>Question Set</b> <br>
+      </label>
+      <select name="quesSetId" id="quesSetId">
+        {% for j in quesSet %}
+        <option value="{{j.id}}">{{j.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <!-- exam privacy -->
+    <div class="mb-3">
+      <label for="privacy"><b>Privacy:</b></label>
+      <select name="privacy" id="privacy">
+        <option value="Public">Public</option>
+        <option value="Protected">Protected</option>
+      </select>
+    </div>
+    <!-- start time -->
+    <div class="mb-3">
+    <label for="startTime"><b>Starting Time:</b></label>
+    <input type="datetime-local" id="startTime" name="startTime">
+  </div>
+    <!-- duration -->
+    <div class="mb-3">
+    <label for="duration"><b>Duration (min):</b></label>
+    <input type="number" id="duration" name="duration">
+  </div>
+  <!-- passing mark -->
+  <div class="mb-3">
+    <label for="passingMark"><b>Passing Mark:</b></label>
+    <input type="text" id="passingMark" name="passingMark">
+  </div>
+  <!-- password -->
+  <div class="mb-3">
+    <label for="password"><b>Password:</b></label>
+    <input type="password" id="password" name="password">
+  </div>
+
+    <!-- description -->
+    <div class="mb-3">
+      <label for="description" class="form-label"><b>Description</b></label>
+      <textarea class="form-control" id="description" name="description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary ">Submit</button>
+    <hr>
+  </form>
+</div>
+{% endblock %}

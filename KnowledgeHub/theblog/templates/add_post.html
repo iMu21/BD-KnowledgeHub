@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} Add Post {% endblock %}
+{% block body %}
+
+{% if user.is_authenticated %}
+<container>
+    <div class="form-group container-fluid" style="width:80%;">
+        <h1 style="margin-top: 3rem;" class="text-center ">Add Post</h1>
+        <form method="POST" enctype="multipart/form-data" action="AddPostView1">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button type='submit' class="btn btn-secondary">Post</button>
+    </div>
+    
+</container>
+{% else %}
+<meta http-equiv="refresh" content="0; URL=/../notAllowed/" />
+{% endif %}
+{% endblock %}

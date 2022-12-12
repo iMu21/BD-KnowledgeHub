@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Create Question Paper {% endblock %}
+{% block body %}
+<div class="card container-fluid justify-content-center shadow" style="width: 60%;margin-top: 2rem;margin-bottom:2rem">
+  <hr><h2 class="text-center " style="color:teal">Create Question Paper</h2><hr>
+  <form action="createQuesPaperReq" method="post">
+    {% csrf_token %}
+    <!-- exam name -->
+    <div class="mb-3">
+      <label for="name" class="form-label"><b>Question Paper Name</b></label>
+      <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <!-- number of question -->
+    <div class="mb-3">
+      <label for="numOfQues" class="form-label"><b>Number of Total Question</b></label>
+      <input type="number" class="form-control" id="numOfQues" name="numOfQues">
+    </div>
+    <!-- exam privacy -->
+    <div class="mb-3">
+      <label for="privacy"><b>Privacy:</b></label>
+      <select name="privacy" id="privacy" style="width: 30%;">
+        <option value="Public">Public</option>
+        <option value="Protected">Protected</option>
+      </select>
+    </div>
+    <!-- description -->
+    <div class="mb-3">
+      <label for="description" class="form-label"><b>Description</b></label>
+      <textarea class="form-control" id="description" name="description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary ">Submit</button><hr>
+  </form>
+</div>
+{% endblock %}

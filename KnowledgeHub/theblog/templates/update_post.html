@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %} Update Post {% endblock %}
+{% block body %}
+
+
+
+{% if user == post.author %}
+<div class="card container-fluid" style="width: 80%;">
+    <h1 class="text-center">Update Post</h1>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-secondary">Update</button>
+    </div>
+</div>
+{% else %}
+<meta http-equiv="refresh" content="0; URL=/../notAllowed/" />
+{% endif %}
+{% endblock %}

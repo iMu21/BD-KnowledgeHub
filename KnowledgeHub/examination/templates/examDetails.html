@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Question Paper {% endblock %}
+{% block body %}
+{% if exam.ended %}
+<meta http-equiv="refresh" content=".001; url='/exam/questionPaper/{{exam.quesSet.pk}}'" />
+{% endif %}
+<div class=" container-fluid" style="width: 80%;margin-top: 1rem;">
+    <h3 class="text-center" style="color:teal">{{exam.name}}</h3><hr>
+    <div class="card container-fluid shadow" style="width: 80%;"><hr>
+        {% if exam.ended %}
+        <p class="text-center">Complexity: {{exam.quesSet.quesSetComplexity}}%</p>
+        {% else %}
+        <p class="text-center"><b>Start Time: {{exam.startTime}}</b></p>
+        <p class="text-center"><b>Duration: {{exam.duration}} Minutes</b></p>
+        {% endif %}
+
+
+        <div class="card-body text-center">
+            <b>Total Registration: {{exam.totalReg}}</b>
+            <p>{{exam.description}}</p><br>
+            {% if exam.running and registered %}
+            <form action="{% url 'joinExam' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="examId" value="{{ exam.pk }}" style="background-color:green"
+                    class="btn btn-primary">Go to exam</button>
+            </form>
+            {% else %}
+            <form action="{% url 'registerExam' exam.pk  %}" method="POST">
+                {% csrf_token %}
+                {% if registered == 1 %}
+                <button type="submit" name="examId" value="{{ exam.pk }}" style="background-color:red"
+                    class="btn btn-primary">Cancel Registration</button>
+                {% else %}
+                <button type="submit" name="examId" value="{{ exam.pk }}" style="background-color:green"
+                    class="btn btn-primary">Register</button>
+                {% endif %}
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+</div>
+{% endblock %}
